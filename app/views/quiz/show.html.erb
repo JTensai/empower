@@ -1,0 +1,20 @@
+<% unless @quiz.header_url.empty? %>
+	<img src="<%= @quiz.header_url %>" />
+<% end %>
+
+<h1><%= @quiz.title %></h1>
+
+<% unless @quiz.ground_rules.empty? %>
+	<h2>The Ground Rules</h2>
+	<p><%= @quiz.ground_rules %></p>
+<% end %>
+
+<% @quiz.questions.each_with_index do |q,i| %>
+	
+	<h2><%= "#{i+1}) #{q.content}" %></h2>
+
+	<% q.answers.each do |a| %>
+		<%= a.content %><br />
+	<% end %>
+
+<% end %>

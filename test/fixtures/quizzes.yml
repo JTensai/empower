@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  title: MyString
+  header_url: MyString
+  badge_url: MyString
+  source_url: MyString
+  ad_url: MyString
+
+two:
+  title: MyString
+  header_url: MyString
+  badge_url: MyString
+  source_url: MyString
+  ad_url: MyString
