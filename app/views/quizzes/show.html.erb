@@ -1,35 +1,25 @@
-<p id="notice"><%= notice %></p>
+<h1><%= @quiz.name %></h1>
 
-<p>
-  <b>Title:</b>
-  <%= @quiz.title %>
-</p>
-
-<p>
-  <b>Header url:</b>
-  <%= @quiz.header_url %>
-</p>
-
-<p>
-  <b>Ground Rules:</b>
-  <%= @quiz.ground_rules %>
-</p>
-
-<p>
-  <b>Badge url:</b>
-  <%= @quiz.badge_url %>
-</p>
-
-<p>
-  <b>Source url:</b>
-  <%= @quiz.source_url %>
-</p>
-
-<p>
-  <b>Ad url:</b>
-  <%= @quiz.ad_url %>
-</p>
-
-
-<%= link_to 'Edit', edit_quiz_path(@quiz) %> |
-<%= link_to 'Back', quizzes_path %>
+<div style="margin: 10px; padding: 0px 20px; border: dashed 1px #444; float:left; min-width: 610px;">
+  <ol class="questions">
+  <% @quiz.questions.each do |question| %>
+    <li>
+      <%= question.content %>
+      <ol class="answers">
+        <% question.answers.each do |answer| %>
+          <li><%= answer.content %></li>
+        <% end %>
+      </ol>
+    </li>
+  <% end %>
+  </ol>
+</div>
+<div style="float: right; max-width: 350px; margin: 10px 0px">
+  <% if @quiz.image_result == true %>
+    <%= image_tag @quiz.image_url().to_s %>
+  <% end %>
+</div> 
+<div style="float:left; width: 800px;">
+  <%= link_to 'Edit', edit_quiz_path(@quiz) %> |
+  <%= link_to 'Back to Quizzes', quizzes_path %>
+</div>

@@ -1,10 +1,13 @@
 class CreateQuizzes < ActiveRecord::Migration
   def change
     create_table :quizzes do |t|
-      t.string :title
+      t.string :name
+      t.boolean :live
+      t.boolean :scoreable
+      t.boolean :image_result
+      t.string :image
       t.string :header_url
-      t.string :badge_url
-      t.string :source_url
+      t.string :ground_rules
       t.string :ad_url
 
       t.timestamps

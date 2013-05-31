@@ -1,16 +1,13 @@
 source 'https://rubygems.org'
 
-gem 'rails', '3.2.8'
-
-# Bundle edge Rails instead:
-# gem 'rails', :git => 'git://github.com/rails/rails.git'
+gem 'rails', '3.2.11'
+gem 'pg'
 
 group :development do
-  gem 'sqlite3'
-end
-
-group :production do
-  gem 'pg'
+  gem 'better_errors'
+  gem 'binding_of_caller'
+  gem 'quiet_assets'
+  gem 'debugger'
 end
 
 
@@ -27,6 +24,13 @@ group :assets do
 end
 
 gem 'jquery-rails'
+
+gem 'thin'
+gem 'cancan'
+
+# gem "mini_magick", "~> 3.4"
+gem "carrierwave"
+gem "fog"
 
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'

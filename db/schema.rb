@@ -11,36 +11,41 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121229062719) do
+ActiveRecord::Schema.define(:version => 20130508013720) do
 
   create_table "answers", :force => true do |t|
+    t.string   "content"
     t.integer  "question_id"
-    t.text     "content"
     t.integer  "weight"
     t.datetime "created_at",  :null => false
     t.datetime "updated_at",  :null => false
   end
 
-  add_index "answers", ["question_id"], :name => "index_answers_on_question_id"
-
   create_table "questions", :force => true do |t|
+    t.string   "content"
     t.integer  "quiz_id"
-    t.text     "content"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end
 
-  add_index "questions", ["quiz_id"], :name => "index_questions_on_quiz_id"
+  create_table "quiz_results", :force => true do |t|
+    t.text     "result"
+    t.integer  "quiz_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
 
   create_table "quizzes", :force => true do |t|
-    t.string   "title"
+    t.string   "name"
+    t.boolean  "live"
+    t.boolean  "scoreable"
+    t.boolean  "image_result"
+    t.string   "image"
     t.string   "header_url"
-    t.string   "badge_url"
-    t.string   "source_url"
+    t.string   "ground_rules"
     t.string   "ad_url"
     t.datetime "created_at",   :null => false
     t.datetime "updated_at",   :null => false
-    t.text     "ground_rules"
   end
 
 end

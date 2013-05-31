@@ -1,31 +1,46 @@
-<h1>Listing quizzes</h1>
-
-<table>
-  <tr>
-    <th>Title</th>
-    <th>Header url</th>
-    <th>Badge url</th>
-    <th>Source url</th>
-    <th>Ad url</th>
-    <th></th>
-    <th></th>
-    <th></th>
-  </tr>
-
-<% @quizzes.each do |quiz| %>
-  <tr>
-    <td><%= quiz.title %></td>
-    <td><%= quiz.header_url %></td>
-    <td><%= quiz.badge_url %></td>
-    <td><%= quiz.source_url %></td>
-    <td><%= quiz.ad_url %></td>
-    <td><%= link_to 'Show', quiz %></td>
-    <td><%= link_to 'Edit', edit_quiz_path(quiz) %></td>
-    <td><%= link_to 'Destroy', quiz, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-  </tr>
+<h1>Quizzes</h1>
+<% if can? :manage, Quiz %>
+  <h3><%= link_to 'Create a New Quiz', new_quiz_path %></h3>
 <% end %>
-</table>
+<h3> Please click on a quiz to take it</h3><br>
 
-<br />
 
-<%= link_to 'New Quiz', new_quiz_path %>
+<% if can? :manage, Quiz %>
+  <table style="margin: 0 auto">
+    <tr>
+      <th>Live?</th>
+      <th>Name</th>
+      <th>Number of Questions</th>
+      <th>Scored?</th>
+      <th>Date Created</th>
+      <th></th>
+      <th></th>
+    </tr>
+
+    <% @quizzes.each do |quiz| %>
+    <tr>
+      <td><% if quiz.live == true %>Yes<% else %>No<% end %></td>
+      <td style="font-size: 18px; width: 250px; padding: 5px 0px; spacing: 5px 0px"><%= link_to quiz.name, start_quiz_path(quiz), style: "text-decoration:none; color: #333" %></td>
+      <td style="width: 150px"><%= pluralize(quiz.questions.size, "Question") %></td>
+      <td><% if quiz.scoreable == true %>Yes<% else %>No<% end %></td>
+      <td style="width: 100px;"><%= quiz.created_at.strftime("%b %e, %Y") %></td>
+      <td style="border:none; padding: 0px 0px 0px 5px;"><%= link_to 'Show', quiz %></td>
+      <td style="border:none;"><%= link_to 'Edit', edit_quiz_path(quiz) %></td>
+      <% if can? :destroy, quiz %>
+        <td style="border:none; padding: 0;"><%= link_to 'Destroy', quiz, method: :delete, data: { confirm: 'Are you sure? If you delete this quiz, you will also delete all results for this quiz.' } %></td>
+      <% end %>
+    </tr>
+    <% end %>
+
+  </table>
+  <br><br>
+<% else %>
+  <% @quizzes.each do |quiz| %>
+    <% if quiz.live == true %>
+      <div style="font-size: 18px; margin: 15px 10px; padding: 5px 10px; width: 289px; min-height: 70px; float: left; text-align:center;  border: solid 2px #999">
+        <b style="font-size: 24px; "><%= link_to quiz.name, start_quiz_path(quiz), style: "text-decoration:none; color: #333" %></b>
+        <br>(<%= pluralize(quiz.questions.size, "Question") %>)
+      </div>
+    <% end %>
+  <% end %>
+<% end %>

@@ -1,19 +1,24 @@
+
 body {
-  background-color: #fff;
-  color: #333;
-  font-family: verdana, arial, helvetica, sans-serif;
+  font-family: trebuchet ms, verdana, arial, helvetica, sans-serif;
   font-size: 13px;
-  line-height: 18px;
+  text-align: left;
 }
 
-p, ol, ul, td {
-  font-family: verdana, arial, helvetica, sans-serif;
-  font-size: 13px;
-  line-height: 18px;
+td{
+  padding: 1px 10px 1px 10px;
+  border: solid 1px #222;
+  margin-right: -10px;
+  line-height: 24px;
+  text-align: center;
+}
+
+th {
+  text-align: center;
 }
 
 pre {
-  background-color: #eee;
+  background-color: #fff;
   padding: 10px;
   font-size: 11px;
 }
@@ -21,11 +26,10 @@ pre {
 a {
   color: #000;
   &:visited {
-    color: #666;
+    color: #333;
   }
   &:hover {
-    color: #fff;
-    background-color: #000;
+    color: blue;
   }
 }
 
@@ -40,30 +44,38 @@ div {
 }
 
 .field_with_errors {
-  padding: 2px;
+  padding: 3px;
   background-color: red;
-  display: table;
+  display: inline-table;
+  color: #fff;
+  font-weight: bold;
+  height: 10px;
+  line-height: 22px;
 }
 
 #error_explanation {
-  width: 450px;
+  width: 380px;
   border: 2px solid red;
-  padding: 7px;
-  padding-bottom: 0;
+  padding-bottom: 10px;
   margin-bottom: 20px;
   background-color: #f0f0f0;
   h2 {
-    text-align: left;
+    text-align: center;
     font-weight: bold;
-    padding: 5px 5px 5px 15px;
-    font-size: 12px;
-    margin: -7px;
-    margin-bottom: 0px;
+    padding: 5px 5px;
+    font-size: 13px;
+    margin: 3px;
+    margin-bottom: 4px;
     background-color: #c00;
     color: #fff;
   }
   ul li {
     font-size: 12px;
     list-style: square;
+    margin-left: 50px;
   }
+}
+
+fieldset{
+  padding: 10px;
 }

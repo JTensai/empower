@@ -1,5 +1,10 @@
 class Quiz < ActiveRecord::Base
-  attr_accessible :ad_url, :badge_url, :header_url, :ground_rules, :source_url, :title
-
+  attr_accessible :name, :questions_attributes, :live, :scoreable, :image, :image_result, :remove_image
   has_many :questions
+  has_many :quiz_results, dependent: :destroy
+  accepts_nested_attributes_for :questions, allow_destroy: true
+  validates_presence_of :name
+
+  mount_uploader :image, QuizImageUploader
+
 end

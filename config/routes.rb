@@ -1,11 +1,13 @@
 Empower::Application.routes.draw do
+
+  root :to => 'quizzes#index'
   get "quiz/:id", controller: 'quiz', action: 'show'
 
-  resources :answers
-
-  resources :questions
-
   resources :quizzes
+  resources :quiz_results
+
+  match 'quiz/:id/start' => 'quiz_results#new', as: 'start_quiz'
+  match 'quiz/:id/results' => 'quiz_results#results_page', as: 'results_page'
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
