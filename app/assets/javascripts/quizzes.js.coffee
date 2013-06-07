@@ -14,6 +14,7 @@ jQuery ->
 
   $('#quiz_scoreable').click ->
     $('.weight_select').toggle()
+    $('#image_result_box').toggle()
     $('#image_result_uploader').hide(150)
     $('#quiz_image_result').prop('checked', false)
     $('.weight_radio_button').prop('checked', false)
