@@ -1,6 +1,6 @@
 # encoding: utf-8
 
-class QuizImageUploader < CarrierWave::Uploader::Base
+class QuizHeaderImageUploader < CarrierWave::Uploader::Base
 
   # Include RMagick or MiniMagick support:
   # include CarrierWave::RMagick
@@ -55,7 +55,7 @@ class QuizImageUploader < CarrierWave::Uploader::Base
   # Override the filename of the uploaded files:
   # Avoid using model.id or version_name here, see uploader/store.rb for details.
   def filename
-    "#{model.name+'_result_image'}".tr(" ", "_").tr("\?", "") if original_filename
+    "#{model.name+'_header'}".tr(" ", "_").tr("\?", "") if original_filename
   end
 
 end

@@ -1,14 +1,18 @@
 <fieldset>
   <%= f.label :content, "Answer" %>:
-  <%= f.text_field :content, style: "margin: 4px 0px;" %>
+  <%= f.text_field :content, style: "margin: 4px 0px;", size: 70 %>
   <%= f.hidden_field :_destroy %>
   <%= link_to "remove", '#', class: "remove_fields" %><br>
   
   <div class="weight_select" style="display:none">
     <%= f.label :weight %>:
-    <% (1..5).each do |i| %>
+    <% (-1..5).each do |i| %>
       <%= f.label :"weight_#{i}" do %>
-        <%= f.radio_button :weight, i, style: "margin-left: 5px", class: "weight_radio_button" %> <%= i %>
+        <% if i == 0 %>
+          <%= f.radio_button :weight, i, style: "margin-left: 20px;", class: "weight_radio_button", checked:"checked" %> <%= i %>
+        <% else %>
+          <%= f.radio_button :weight, i, style: "margin-left: 20px", class: "weight_radio_button" %> <%= i %>
+        <% end %>
       <% end %>
     <% end %>
   </div>

@@ -1,0 +1,9 @@
+<div style="margin: 0 auto; width: <%= @quiz_taken.ad_width %>px;">
+  <iframe width="<%= @quiz_taken.ad_width %>" height="<%= @quiz_taken.ad_height %>" style=" border: solid #444 3px;" src=<%= @quiz_taken.ad_url %> frameborder="0" allowfullscreen></iframe>
+
+<% if @quiz_taken.image_result == true %>
+  <%= link_to "Continue to Quiz Results", results_page_path(@quiz_result), style: "float:right; margin: 10px;" %>
+<% else %>
+  <h2> Thank you for taking our quiz! </h2>
+<% end %>
+</div>

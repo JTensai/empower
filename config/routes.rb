@@ -8,6 +8,7 @@ Empower::Application.routes.draw do
 
   match 'quiz/:id/start' => 'quiz_results#new', as: 'start_quiz'
   match 'quiz/:id/results' => 'quiz_results#results_page', as: 'results_page'
+  match 'quiz/:id/ad' => 'quiz_results#ad_page', as: 'ad_page'
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

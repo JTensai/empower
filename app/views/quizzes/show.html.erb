@@ -14,11 +14,12 @@
   <% end %>
   </ol>
 </div>
-<div style="float: right; max-width: 350px; margin: 10px 0px">
-  <% if @quiz.image_result == true %>
+
+<% if @quiz.image_result == true %>
+  <div style="float: right; max-width: 350px; margin: 10px 0px">
     <%= image_tag @quiz.image_url().to_s %>
-  <% end %>
-</div> 
+  </div>
+<% end %>
 <div style="float:left; width: 800px;">
   <%= link_to 'Edit', edit_quiz_path(@quiz) %> |
   <%= link_to 'Back to Quizzes', quizzes_path %>

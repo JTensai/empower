@@ -69,4 +69,6 @@ div .actions input{
   padding: 15px 20px; 
   float:left;
   width: 1000px;
+  min-height: 400px;
+  margin-bottom: 40px;
 }

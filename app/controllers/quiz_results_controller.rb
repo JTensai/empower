@@ -24,6 +24,10 @@ class QuizResultsController < ApplicationController
     end
   end
 
+  def ad_page
+    @quiz_taken = Quiz.find(@quiz_result.quiz_id)
+  end
+
   def new
     @quiz_result = QuizResult.new
     @quiz_given = Quiz.find(params[:id])
@@ -48,7 +52,9 @@ class QuizResultsController < ApplicationController
 
     respond_to do |format|
       if @quiz_result.save
-        if @quiz_taken.image_result == true
+        if @quiz_taken.ad_url != nil
+          format.html { redirect_to ad_page_path(@quiz_result) }
+        elsif @quiz_taken.image_result == true
           format.html { redirect_to results_page_path(@quiz_result) }
         else
           format.html { redirect_to @quiz_result }

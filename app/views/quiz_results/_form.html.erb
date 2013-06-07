@@ -1,47 +1,55 @@
-<%= form_for @quiz_result do |f| %>
-  <% if @quiz_result.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@quiz_result.errors.count, "error") %> prohibited this Quiz from being saved:</h2>
-      <ul>
-      <% @quiz_result.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
-      </ul>
+<div style="width: 850px; margin: 0 auto;">
+  <%= form_for @quiz_result do |f| %>
+    <% if @quiz_result.errors.any? %>
+      <div id="error_explanation">
+        <h2><%= pluralize(@quiz_result.errors.count, "error") %> prohibited this Quiz from being saved:</h2>
+        <ul>
+        <% @quiz_result.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <% if @quiz_given.header_url == nil %>
+      <h1><%= @quiz_given.name %></h1>
+    <% end %> 
+
+    <% unless @quiz_given.ground_rules == "" %>
+      <h3 style="margin: 15px 0 0 0; font-size: 18px;">Ground Rules</h3>
+      <div style=" width: 600px; margin: 0 auto 20px auto; border: solid #777 2px; min-height: 50px; padding: 8px;">
+        <%= @quiz_given.ground_rules %>
+      </div>
+    <% end %>
+
+    <div style="margin: 10px; padding: 0px 20px; border: dashed 1px #444">
+      <ol class="questions">
+        <% @question_count = 0 %>
+        <% @quiz_given.questions.each do |question| %>
+          <% @question_count = @question_count + 1 %>
+          <li>
+            <%= question.content %>
+            <ol class="answers">            
+              <% question.answers.each do |answer| %>
+                <%= f.label :"#{answer.content}" do %>
+                  <% answer_hash = {answer: answer.content, weight: answer.weight, question_number: @question_count} %> 
+                  <%= f.radio_button :result, answer_hash, style: "margin: 5px; font-weight: normal", class: "answers", name: "question_#{@question_count}" %> 
+                  <%= label_tag :result, answer.content %>
+                  <br>
+                <% end %>
+              <% end %>
+            </ol>
+          </li>
+        <% end %>
+      </ol>
+    </div>
+    <%= hidden_field_tag 'question_count', @question_count %> 
+    <%= hidden_field_tag 'quiz_taken', @quiz_given.id %> 
+    <div class="actions" style="text-align:center">
+      <%= f.submit "Submit Quiz", disabled: "disabled", :id => "submit_button" %>
     </div>
   <% end %>
-
-  <h1><%= @quiz_given.name %></h1>  
-
-  <div style="margin: 10px; padding: 0px 20px; border: dashed 1px #444">
-    <ol class="questions">
-      <% @question_count = 0 %>
-      <% @quiz_given.questions.each do |question| %>
-        <% @question_count = @question_count + 1 %>
-        <li>
-          <%= question.content %>
-          <ol class="answers">            
-            <% question.answers.each do |answer| %>
-              <%= f.label :"#{answer.content}" do %>
-                <% answer_hash = {answer: answer.content, weight: answer.weight, question_number: @question_count} %> 
-                <%= f.radio_button :result, answer_hash, style: "margin: 5px; font-weight: normal", class: "answers", name: "question_#{@question_count}" %> 
-                <%= label_tag :result, answer.content %>
-                <br>
-              <% end %>
-            <% end %>
-          </ol>
-        </li>
-      <% end %>
-    </ol>
-  </div>
-  <h4 style="text-align:center">There are <%= @question_count %> questions in this quiz.</h4>
-
-  <%= hidden_field_tag 'question_count', @question_count %> 
-  <%= hidden_field_tag 'quiz_taken', @quiz_given.id %> 
-  <div class="actions" style="text-align:center">
-    <%= f.submit "Submit Quiz", disabled: "disabled", :id => "submit_button" %>
-  </div>
-<% end %>
-
+</div>
 
 
 
