@@ -11,9 +11,18 @@
       </div>
     <% end %>
 
-    <% if @quiz_given.header_url == nil %>
+    <% if @quiz_given.header_image.file != nil %>
+      <div style="width: 100%; text-align: center">
+        <%= image_tag @quiz_given.header_image_url() %>
+      </div>      
+    <% elsif @quiz_given.header_url != "" %>
+      <div style="width: 100%; text-aling:center; margin: 0 auto;">
+        <%= image_tag(@quiz_given.header_url) %>
+      </div>
+    <% else %>
       <h1><%= @quiz_given.name %></h1>
-    <% end %> 
+    <% end %>
+
 
     <% unless @quiz_given.ground_rules == "" %>
       <h3 style="margin: 15px 0 0 0; font-size: 18px;">Ground Rules</h3>

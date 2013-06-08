@@ -7,7 +7,7 @@
 <%# picture = @quiz_taken.image_url().to_s %>
 <% name = @quiz_taken.name %>
 <% caption = "Click the link above to take this quiz and get your own results" %>
-<% description = "Number of kids I can handle in one Gymnastics class at Tricks: "+@score.to_s+"<center>%20%20</center>-%20Created%20through%20Empowered%20Quizzes" %>
+<% description = @quiz_taken.fb_text + @score.to_s %>
 <% redirect_uri = "https://empowered-quizzes.herokuapp.com"+results_page_path(@quiz_result).to_s %>
 
 <script>
@@ -44,7 +44,7 @@
   </a>
 <br>
   <div style="float:right; margin-right: 72px; font-size: 20px;">
-    <a href="https://www.facebook.com/dialog/feed?app_id=<%= app_id %>&display=<%= display %>&link=<%= link %>&picture=<%= picture %>&name=<%= name %>&caption= <%= caption %>&description= <%= description %>&redirect_uri= <%= redirect_uri %>" onclick="fbs_click()" target="_new" class="fb_share_link">Share on Facebook</a>
+    <a href="#" onclick="fbs_click()" target="_new" class="fb_share_link">Share on Facebook</a>
   </div>
   <div>
     <br><br><br><br><br><%= link_to "Return to Full List of Quizzes", quizzes_path %>

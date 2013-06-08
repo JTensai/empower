@@ -6,10 +6,13 @@
   
   <div class="weight_select" style="display:none">
     <%= f.label :weight %>:
-    <% (-1..5).each do |i| %>
+    <% (0..5).each do |i| %>
       <%= f.label :"weight_#{i}" do %>
         <% if i == 0 %>
           <%= f.radio_button :weight, i, style: "margin-left: 20px;", class: "weight_radio_button", checked:"checked" %> <%= i %>
+        <% elsif i == 5 %>
+          <%= f.radio_button :weight, i, style: "margin-left: 20px;", class: "weight_radio_button" %>
+          <%= f.number_field :weight, size: 2, placeholder: " Custom Value" %>
         <% else %>
           <%= f.radio_button :weight, i, style: "margin-left: 20px", class: "weight_radio_button" %> <%= i %>
         <% end %>

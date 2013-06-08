@@ -20,87 +20,89 @@
         </ul>
       </div>
     <% end %>
-  <div id="quiz_settings" style="border: solid #444 2px; margin-top: 30px; padding: 10px;">
-    <h3 style="margin: 0 0 10px 0">Quiz Settings</h3>
-    <div style="margin:0 auto; width: 560px;">
-      <%= f.label :name %>: 
-      <%= f.text_field :name, size: 80 %>
-    </div>
-    <div class="field" style="margin-top: 15px">
-      <div style="float:left; width: 970px;">
+    <div id="quiz_settings" style="border: solid #444 2px; margin-top: 30px; padding: 10px;">
+      <h3 style="margin: 0 0 10px 0">Quiz Settings</h3>
+      <div style="margin:0 auto; width: 560px;">
+        <%= f.label :name %>: 
+        <%= f.text_field :name, size: 80 %>
+      </div>
+      <div class="field" style="margin-top: 15px">
         <div style="float:left; width: 970px;">
-          <%= f.check_box :live %>
-          <%= f.label :live, style: "margin-right: 20px" %> 
-          <%= f.check_box :scoreable %>
-          <%= f.label :scoreable, style: "margin-right: 20px" %> 
-          <span id="image_result_box">
-            <%= f.check_box :image_result %>
-            <%= f.label :image_result %>
-          </span>
+          <div style="float:left; width: 970px;">
+            <%= f.check_box :live %>
+            <%= f.label :live, style: "margin-right: 20px" %> 
+            <%= f.check_box :scoreable %>
+            <%= f.label :scoreable, style: "margin-right: 20px" %> 
+            <span id="image_result_box">
+              <%= f.check_box :image_result %>
+              <%= f.label :image_result %>
+            </span>
+          </div>
+          <div style="float:left;">
+            <% if @quiz.image_url == nil %>
+              <div id="image_result_uploader" style="display:none; border: dashed 1px #555; padding: 7px; float:left; margin: 10px 5px; width: 500px;" class="image_result_input">
+                <b><%= f.label :image, "Result Image:" %></b>
+                   <%= f.file_field :image %><br>
+              </div>
+            <% else %>
+              <div id="image_result_uploader" style="display:none; border: dashed 1px #555; padding: 7px; float:left; margin: 10px 5px; line-height: 22px; width: 500px;" class="image_result_input">
+                <b><%= f.label :image, "New Result Image: " %></b><%= f.file_field :image %><br>
+                <%= f.check_box :remove_image, id:"remove_image_box" %> Remove Image
+              </div>
+            <% end %>
+          </div>
         </div>
-        <div style="float:left;">
-          <% if @quiz.image_url == nil %>
-            <div id="image_result_uploader" style="display:none; border: dashed 1px #555; padding: 7px; float:left; margin: 10px 5px; width: 500px;" class="image_result_input">
-              <b><%= f.label :image, "Result Image:" %></b>
-                 <%= f.file_field :image %><br>
-            </div>
-          <% else %>
-            <div id="image_result_uploader" style="display:none; border: dashed 1px #555; padding: 7px; float:left; margin: 10px 5px; line-height: 22px; width: 500px;" class="image_result_input">
-              <b><%= f.label :image, "New Result Image: " %></b><%= f.file_field :image %><br>
-              <%= f.check_box :remove_image, id:"remove_image_box" %> Remove Image
-            </div>
-          <% end %>
-        </div>
+        <br>
       </div>
-      <br>
-    </div>
-    <div>
-      <div style="margin: 0 0 20px 0; line-height: 30px;">
-        <input type="radio" name="header" value="image" style="margin-left:0" id="header_image_uploader_radio" checked="checked">Upload Header Image
-        <input type="radio" name="header" value="url" style="margin-left: 20px;" id="header_url_radio">Header Url<br>
-        <div style="display:none" id="header_url_input">
-          <%= f.label :header_url %>: 
-          <%= f.text_field :header_url %><br>
-        </div>
-        <div id="header_image_uploader_input" style="border: dashed #444 1px; width: 500px; padding: 7px; margin: 10px 5px;">
-          <% if @quiz.header_image_url == nil %>
-              <b><%= f.label :header_image, "Header Image:" %></b>
-                 <%= f.file_field :header_image %><br>
-            </div>
-          <% else %>
-              <b><%= f.label :header_image, "New Header Image: " %></b><%= f.file_field :header_image %><br>
-              <%= f.check_box :remove_header_image, id:"remove_header_image_box" %> Remove Header Image
-          <% end %>
+      <div>
+        <div style="margin: 0 0 20px 0; line-height: 30px;">
+          <input type="radio" name="header" value="image" style="margin-left:0" id="header_image_uploader_radio" checked="checked">Upload Header Image
+          <input type="radio" name="header" value="url" style="margin-left: 20px;" id="header_url_radio">Header Url<br>
+          <div style="display:none" id="header_url_input">
+            <%= f.label :header_url %>: 
+            <%= f.text_field :header_url %><br>
+          </div>
+          <div id="header_image_uploader_input" style="border: dashed #444 1px; width: 500px; padding: 7px; margin: 10px 5px;">
+            <% if @quiz.header_image_url == nil %>
+                <b><%= f.label :header_image, "Header Image:" %></b>
+                <%= f.file_field :header_image %><br>              
+            <% else %>
+                <b><%= f.label :header_image, "New Header Image: " %></b><%= f.file_field :header_image %><br>
+                <%= f.check_box :remove_header_image, id:"remove_header_image_box" %> Remove Header Image
+            <% end %>
 
+          </div>
         </div>
+        <div style="margin: 0 0 10px 0">
+          <%= f.label :ad_url, "Ad Url:", style: "margin-right: 16px;" %> 
+          <%= f.text_field :ad_url, size: 71 %><br>
+          <%= f.label :ad_width %>:
+          <% if @quiz.ad_width == nil %>
+            <%= f.number_field :ad_width, value: 700, max: 900, style: 'padding: 2px;' %>px
+          <% else %>
+            <%= f.number_field :ad_width, value: @quiz.ad_width, max: 900, style: 'padding: 2px;' %>px
+          <% end %>
+          <%= f.label :ad_height, style: "margin-left: 42px;" %>:
+          <% if @quiz.ad_height == nil %>
+            <%= f.number_field :ad_height, value: 525, style: 'padding: 2px;' %>px
+          <% else %>
+            <%= f.number_field :ad_height, value: @quiz.ad_height, style: 'padding: 2px;' %>px
+          <% end %>
+        </div>
+        <%= f.label :ground_rules %>: <br>
+        <%= f.text_area :ground_rules, style: "height: 100px; width: 515px;" %><br>
+        <%= f.label :fb_text, "Message to be used when posting results to Facebook:" %><br>
+        <%= f.text_field :fb_text, size: 81, style: "margin:0; padding: 1px;" %><br>
+        <p> Example: "My life is worth approximately: $" <span style="color: #0ECF28">(calculated score goes here)</span></p>
       </div>
-      <div style="margin: 0 0 10px 0">
-        <%= f.label :ad_url, "Ad Url:", style: "margin-right: 16px;" %> 
-        <%= f.text_field :ad_url, size: 71 %><br>
-        <%= f.label :ad_width %>:
-        <% if @quiz.ad_width == nil %>
-          <%= f.number_field :ad_width, value: 700, max: 900, style: 'padding: 2px;' %>px
-        <% else %>
-          <%= f.number_field :ad_width, value: @quiz.ad_width, max: 900, style: 'padding: 2px;' %>px
-        <% end %>
-        <%= f.label :ad_height, style: "margin-left: 42px;" %>:
-        <% if @quiz.ad_height == nil %>
-          <%= f.number_field :ad_height, value: 525, style: 'padding: 2px;' %>px
-        <% else %>
-          <%= f.number_field :ad_height, value: @quiz.ad_height, style: 'padding: 2px;' %>px
-        <% end %>
-      </div>
-      <%= f.label :ground_rules %>: <br>
-      <%= f.text_area :ground_rules, style: "height: 100px; width: 515px;" %><br>
     </div>
-  </div>
 
     <%= f.fields_for :questions do |builder| %>
       <%= render 'question_fields', f: builder %>
       
     <% end %>
 
-  <%= link_to_add_fields "Add Question", f, :questions %>
+    <%= link_to_add_fields "Add Question", f, :questions %>
 
     <div class="actions" style="margin: 0 auto; width: 128px">
       <%= f.submit %>

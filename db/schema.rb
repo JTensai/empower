@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130605235802) do
+ActiveRecord::Schema.define(:version => 20130607231221) do
 
   create_table "answers", :force => true do |t|
     t.string   "content"
@@ -44,11 +44,12 @@ ActiveRecord::Schema.define(:version => 20130605235802) do
     t.string   "header_url"
     t.string   "ground_rules"
     t.string   "ad_url"
-    t.datetime "created_at",   :null => false
-    t.datetime "updated_at",   :null => false
+    t.datetime "created_at",                                          :null => false
+    t.datetime "updated_at",                                          :null => false
     t.string   "header_image"
     t.integer  "ad_width"
     t.integer  "ad_height"
+    t.string   "fb_text",      :default => "On this Quiz I scored: "
   end
 
 end
