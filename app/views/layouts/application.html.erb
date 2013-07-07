@@ -53,19 +53,35 @@
     </div>
     <div class="row" style="height: 16px;"></div>
 
-    <div class="row">
-      <div data-alert id="error_alert" class="large-12 large-centered columns alert-box alert radius" style="padding: 8px; margin: 3px auto; text-align:center; display:none">
-        <%= yield :error %>        
-        <a href="#" class="close">&times;</a>
-      </div>
-      <div data-alert id="succes_alert" class="large-12 large-centered columns alert-box success radius" style="padding: 8px; margin: 3px auto; text-align:center; display:none">
-        <%= yield :succes %>
-        <a href="#" class="close">&times;</a>
-      </div>
-      <div data-alert id="notice_alert" class="large-12 large-centered columns alert-box radius" style="padding: 8px; margin: 3px auto; text-align:center; display:none">
-        <%= yield :notice %>
-        <a href="#" class="close">&times;</a>
-      </div>
+    <div class="row" id="flash_container">
+      <% flash.each do |name, msg| %>
+
+        <% if name.to_s == "alert" %>
+          <div data-alert id="error_alert" class="large-12 large-centered columns alert-box alert radius" style="padding: 8px; margin: 3px auto; text-align:center;">   
+            <%= msg %>
+            <a href="#" class="close">&times;</a>
+          </div>
+        <% end %>
+
+        <% if name.to_s == "notice" %>
+          <div data-alert id="succes_alert" class="large-12 large-centered columns alert-box success radius" style="padding: 8px; margin: 3px auto; text-align:center;">
+            <%= msg %>
+            <a href="#" class="close">&times;</a>
+          </div>
+        <% end %>
+
+        <% if name.to_s == "error" %>
+          <div data-alert id="notice_alert" class="large-12 large-centered columns alert-box radius" style="padding: 8px; margin: 3px auto; text-align:center;">
+            <%= msg %>
+            <a href="#" class="close">&times;</a>
+          </div>
+        <% end %>
+      <% end %>
+    </div>
+
+    <div>
+      
+        
     </div>
 
     <div id="content" style="margin-top: 11px;">

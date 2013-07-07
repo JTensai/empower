@@ -11,16 +11,16 @@
     <% end %>
   <% end %>
 
-  <div class="row">
-    <div class="large-2 large-offset-2 columns"><%= f.label :email, "E-mail: ", class: "inline right", style: "font-size: 14px; margin-right: 10px;" %></div>
+  <div class="row" style="font-size: 16px; margin-top: 80px;">
+    <div class="large-2 large-offset-2 columns"><%= f.label :email, "E-mail: ", class: "inline right", style: "margin-right: 10px;" %></div>
     <div class="large-4 columns left"><%= f.text_field :email %></div>
   </div>
-  <div class="row">
-    <div class="large-2 large-offset-2 columns"><%= f.label :password, "Password: ", class: "inline right", style: "font-size: 14px; margin-right: 10px;" %></div>
+  <div class="row" style="font-size: 16px;">
+    <div class="large-2 large-offset-2 columns"><%= f.label :password, "Password: ", class: "inline right", style: "margin-right: 10px;" %></div>
     <div class="large-4 columns left"><%= f.password_field :password %></div>
   </div>
-  <div class="row">
-    <div class="large-2 large-offset-2 columns"><%= f.label :password_confirmation, "Password Confirmation: ", class: "inline right", style: "font-size: 14px; margin-right: 10px;" %></div>
+  <div class="row" style="font-size: 16px;">
+    <div class="large-2 large-offset-2 columns"><%= f.label :password_confirmation, "Password Confirmation: ", class: "inline right", style: "margin-right: 10px;" %></div>
     <div class="large-4 columns left"><%= f.password_field :password_confirmation %></div>
   </div>
   <div class="actions large-centered large-2 columns"><%= f.submit "Sign Up", class: "button radius expand large" %></div>
