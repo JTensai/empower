@@ -15,7 +15,7 @@
 </div>
 
 <div style="width: 850px; margin: 0 auto;">
-  <%= form_for @quiz_result do |f| %>
+  <%= form_for @quiz_result, html: {:class => "custom"} do |f| %>
     <% if @quiz_result.errors.any? %>
       <div id="error_explanation">
         <h2><%= pluralize(@quiz_result.errors.count, "error") %> prohibited this Quiz from being saved:</h2>
@@ -52,9 +52,9 @@
                     <%= f.label :"#{answer.content}" do %>
                       <% answer_hash = {answer: answer.content, weight: answer.weight, question_number: @question_count} %> 
                       <div class="large-1 columns">
-                        <%= f.radio_button :result, answer_hash, style: "margin: 5px; font-weight: normal", class: "answers", name: "question_#{@question_count}" %>
+                        <%= f.radio_button :result, answer_hash, style: "margin: 5px; font-weight: normal; display: none", class: "answers", name: "question_#{@question_count}" %>
                       </div>
-                      <div class="large-11 columns" style="font-size: 14px; margin: 3px 0 0 -35px;">
+                      <div class="large-11 columns" style="font-size: 14px; margin: 0 0 0 -35px;">
                         <%= label_tag :result, answer.content %>
                       </div>
                       <br>

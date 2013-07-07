@@ -1,13 +1,3 @@
-<% unless @quiz.image_url == nil %>
-  <style>
-    #result_image_previewer{ 
-      background-image: url('');
-      background-repeat:no-repeat;
-      /* background-position: 575px 100px; */
-    }
-  </style>
-<% end %>
-
 <div id="form">
   <%= form_for @quiz, html: {:class => "custom"} do |f| %>
     <% if @quiz.errors.any? %>
@@ -41,18 +31,18 @@
           <div class="row collapse" style="margin-bottom: 15px;">
             <div class="large-3 columns">
               <%= f.label :live, "Live" do %>
-                <%= f.check_box :live %> Live
+                <%= f.check_box :live, style: "display: none" %> Live
               <% end %>
             </div>
             <div class="large-3 columns">
               <%= f.label :scoreable, id: "quiz_scoreable_label" do %>
-                <%= f.check_box :scoreable %> Scoreable
+                <%= f.check_box :scoreable, style: "display: none" %> Scoreable
               <% end %>
             </div> 
             <div class="large-3 columns left">
               <span id="image_result_box">
                 <%= f.label :image_result, id: "quiz_image_result_label" do %>
-                  <%= f.check_box :image_result %> Image Result
+                  <%= f.check_box :image_result, style: "display: none" %> Image Result
                 <% end %>
               </span>
             </div>
@@ -71,7 +61,7 @@
                 <div class="large-12 columns" style="margin-bottom: 8px;">
                   <div class="large-4 columns" style="font-size: 15px;">
                     <%= f.label :remove_image, id: "remove_image_label", style: "margin-top: 4px;" do %>
-                      <%= f.check_box :remove_image %> Remove Current Image:  
+                      <%= f.check_box :remove_image, style: "display: none" %> Remove Current Image:  
                     <% end %>
                   </div>
                   <div class="large-8 columns" style="font-size: 14px; margin: 4px 0 0 0;">
@@ -89,12 +79,12 @@
           <div class="row" style="line-height: 30px; margin-top: 15px;">
             <div class="large-5 columns left" style="margin-right: 30px;">
               <%= f.label :header_type_image, id: "header_image_uploader_label" do %>
-                <%= f.radio_button :header_type, "image", checked:"checked" %> Upload Header Image
+                <%= f.radio_button :header_type, "image", checked:"checked", style: "display: none" %> Upload Header Image
               <% end %>
             </div>
             <div class="large-3 columns left">
               <%= f.label :header_type_url, id: "header_url_label" do %>
-                <%= f.radio_button :header_type, "url" %> Header Url
+                <%= f.radio_button :header_type, "url", style: "display: none" %> Header Url
               <% end %>
             </div>
           </div>
@@ -113,7 +103,7 @@
                 <div class="large-12 columns" style="margin-bottom: 8px;">
                   <div class="large-4 columns" style="font-size: 15px;">
                     <%= f.label :remove_header_image, id: "remove_header_image_label", style: "margin-top: 4px;" do %>
-                      <%= f.check_box :remove_header_image %> Remove Header Image:  
+                      <%= f.check_box :remove_header_image, style: "display: none" %> Remove Header Image:  
                     <% end %>
                   </div>
                   <div class="large-8 columns" style="font-size: 14px; margin: 4px 0 0 0;">
