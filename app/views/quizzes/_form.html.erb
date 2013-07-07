@@ -202,7 +202,7 @@
             </div>
           </div>
         </div>
-        <% if @quiz.image.to_s == "" && @quiz.header_image.to_s == "" && @quiz.header_url == "" %>
+        <% if @quiz.image.to_s == "" && @quiz.header_image.to_s == "" && @quiz.header_url.to_s == "" %>
         <% else %>
           <div class="large-5 columns" style="border: #999 2px solid; min-height: 200px; padding: 20px 0;">
             <% unless @quiz.image_result == false %>
