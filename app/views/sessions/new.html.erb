@@ -1,0 +1,17 @@
+<h1 style="margin-bottom: 75px;">Log In</h1>
+<%= form_tag sessions_path do %>
+  <div  style="font-size: 16px;">
+    <div class="row">
+      <div class="large-2 large-offset-2 columns"><%= label_tag :email, "E-mail: ", class: "inline right", style: "margin-right: 10px;" %></div>
+      <div class="large-4 columns left"><%= text_field_tag :email, params[:email] %></div>
+    </div>
+    <div class="row">
+      <div class="large-2 large-offset-2 columns"><%= label_tag :password, "Password: ", class: "inline right", style: "margin-right: 10px;" %></div>
+      <div class="large-4 columns left"><%= password_field_tag :password %></div>
+    </div>
+
+    <div class="actions large-centered large-2 columns"><%= submit_tag "Log In", class: "button radius expand" %></div>
+  </div>
+<% end %>
+
+

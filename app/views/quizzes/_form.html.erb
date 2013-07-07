@@ -1,17 +1,17 @@
 <% unless @quiz.image_url == nil %>
   <style>
-    #quiz_settings{ 
-      background-image: url('<%= @quiz.image_url().to_s %>');
+    #result_image_previewer{ 
+      background-image: url('');
       background-repeat:no-repeat;
-      background-position: 575px 100px;
+      /* background-position: 575px 100px; */
     }
   </style>
 <% end %>
 
 <div id="form">
-  <%= form_for @quiz do |f| %>
+  <%= form_for @quiz, html: {:class => "custom"} do |f| %>
     <% if @quiz.errors.any? %>
-      <div id="error_explanation">
+      <div id="error_explanation" class="alert">
         <h2><%= pluralize(@quiz.errors.count, "error") %> prohibited this quiz from being saved:</h2>
         <ul>
         <% @quiz.errors.full_messages.each do |msg| %>
@@ -20,92 +20,253 @@
         </ul>
       </div>
     <% end %>
-    <div id="quiz_settings" style="border: solid #444 2px; margin-top: 30px; padding: 10px;">
-      <h3 style="margin: 0 0 10px 0">Quiz Settings</h3>
-      <div style="margin:0 auto; width: 560px;">
-        <%= f.label :name %>: 
-        <%= f.text_field :name, size: 80 %>
+    
+    <div id="quiz_settings" style="border: solid #444 2px; margin-top: 30px; padding: 10px; font-size: 16px;">
+      <div class="row">
+        <div class="large-12 columns"><h3 style="margin: 0 0 10px 0">Quiz Settings</h3></div>
       </div>
-      <div class="field" style="margin-top: 15px">
-        <div style="float:left; width: 970px;">
-          <div style="float:left; width: 970px;">
-            <%= f.check_box :live %>
-            <%= f.label :live, style: "margin-right: 20px" %> 
-            <%= f.check_box :scoreable %>
-            <%= f.label :scoreable, style: "margin-right: 20px" %> 
-            <span id="image_result_box">
-              <%= f.check_box :image_result %>
-              <%= f.label :image_result %>
-            </span>
+      <div class="row">
+        <div class="large-9 large-centered columns">
+          <div class="large-1 columns">
+            <%= f.label :name, "Name:", class: "right inline", style: "margin-right:5px;" %>
           </div>
-          <div style="float:left;">
-            <% if @quiz.image_url == nil %>
-              <div id="image_result_uploader" style="display:none; border: dashed 1px #555; padding: 7px; float:left; margin: 10px 5px; width: 500px;" class="image_result_input">
-                <b><%= f.label :image, "Result Image:" %></b>
-                   <%= f.file_field :image %><br>
-              </div>
-            <% else %>
-              <div id="image_result_uploader" style="display:none; border: dashed 1px #555; padding: 7px; float:left; margin: 10px 5px; line-height: 22px; width: 500px;" class="image_result_input">
-                <b><%= f.label :image, "New Result Image: " %></b><%= f.file_field :image %><br>
-                <%= f.check_box :remove_image, id:"remove_image_box" %> Remove Image
-              </div>
-            <% end %>
+          <div class="large-11 columns">
+            <%= f.text_field :name %>
           </div>
         </div>
-        <br>
       </div>
-      <div>
-        <div style="margin: 0 0 20px 0; line-height: 30px;">
-          <input type="radio" name="header" value="image" style="margin-left:0" id="header_image_uploader_radio" checked="checked">Upload Header Image
-          <input type="radio" name="header" value="url" style="margin-left: 20px;" id="header_url_radio">Header Url<br>
-          <div style="display:none" id="header_url_input">
-            <%= f.label :header_url %>: 
-            <%= f.text_field :header_url %><br>
+      <div class="row" style="margin-top: 15px;">
+        
+        <div class="large-7 columns" style="padding: 0 15px 0 5px;">
+          <div class="row collapse" style="margin-bottom: 15px;">
+            <div class="large-3 columns">
+              <%= f.label :live, "Live" do %>
+                <%= f.check_box :live %> Live
+              <% end %>
+            </div>
+            <div class="large-3 columns">
+              <%= f.label :scoreable, id: "quiz_scoreable_label" do %>
+                <%= f.check_box :scoreable %> Scoreable
+              <% end %>
+            </div> 
+            <div class="large-3 columns left">
+              <span id="image_result_box">
+                <%= f.label :image_result, id: "quiz_image_result_label" do %>
+                  <%= f.check_box :image_result %> Image Result
+                <% end %>
+              </span>
+            </div>
           </div>
-          <div id="header_image_uploader_input" style="border: dashed #444 1px; width: 500px; padding: 7px; margin: 10px 5px;">
-            <% if @quiz.header_image_url == nil %>
-                <b><%= f.label :header_image, "Header Image:" %></b>
-                <%= f.file_field :header_image %><br>              
-            <% else %>
-                <b><%= f.label :header_image, "New Header Image: " %></b><%= f.file_field :header_image %><br>
-                <%= f.check_box :remove_header_image, id:"remove_header_image_box" %> Remove Header Image
-            <% end %>
 
+          <div class="row collapse">
+            <div class="large-12 columns" id="image_result_uploader" style="display:none; border: dashed 1px #555; padding: 12px 7px 5px 7px; margin: 10px 0; line-height: 22px;">
+              <% if @quiz.image_url == nil %>
+                <div class="large-4 columns"><%= f.label :image_label, "Result Image: ", style: "margin-top: 4px; font-weight: bold" %></div>
+                <div class="large-5 columns right"><%= f.file_field :image, style: "margin: 5px 0px 0px -104px; width: 320px;" %></div>
+                <div class="large-3 columns"><%= f.label :image, "Choose File", class: "button radius small expand", style: "margin-left:-20px;" %></div>
+              <% else %>               
+                <div class="large-4 columns"><%= f.label :image_label, "New Result Image: ", style: "margin-top: 4px; font-weight: bold" %></div>               
+                <div class="large-5 columns right"><%= f.file_field :image, style: "margin: 5px 0px 0px -104px; width: 320px;" %></div>
+                <div class="large-3 columns"><%= f.label :image, "Choose File", class: "button radius small expand", style: "margin-left:-20px;" %></div>
+                <div class="large-12 columns" style="margin-bottom: 8px;">
+                  <div class="large-4 columns" style="font-size: 15px;">
+                    <%= f.label :remove_image, id: "remove_image_label", style: "margin-top: 4px;" do %>
+                      <%= f.check_box :remove_image %> Remove Current Image:  
+                    <% end %>
+                  </div>
+                  <div class="large-8 columns" style="font-size: 14px; margin: 4px 0 0 0;">
+                    <% if File.basename(@quiz.image.to_s).length < 44 %>
+                      <%= File.basename(@quiz.image.to_s) %>
+                    <% else %>
+                      <%= "..."+File.basename(@quiz.image.to_s)[-45,44] %>
+                    <% end %>
+                  </div>
+                </div>  
+              <% end %>
+            </div>
+          </div>
+
+          <div class="row" style="line-height: 30px; margin-top: 15px;">
+            <div class="large-5 columns left" style="margin-right: 30px;">
+              <%= f.label :header_type_image, id: "header_image_uploader_label" do %>
+                <%= f.radio_button :header_type, "image", checked:"checked" %> Upload Header Image
+              <% end %>
+            </div>
+            <div class="large-3 columns left">
+              <%= f.label :header_type_url, id: "header_url_label" do %>
+                <%= f.radio_button :header_type, "url" %> Header Url
+              <% end %>
+            </div>
+          </div>
+       
+            
+          <div class="row collapse" style="margin-bottom: 20px;">
+            <div class="large-12 columns" id="header_image_uploader_input" style="border: dashed #444 1px; padding: 12px 7px 5px 7px; margin-bottom: 10px; line-height: 22px;">
+              <% if @quiz.header_image_url == nil %>
+                <div class="large-4 columns"><%= f.label :header_image_label, "Header Image: ", style: "margin-top: 4px; font-weight: bold" %></div>
+                <div class="large-5 columns right"><%= f.file_field :header_image, style: "margin: 5px 0px 0px -104px; width: 320px;" %></div>
+                <div class="large-3 columns"><%= f.label :header_image, "Choose File", class: "button radius small expand", style: "margin-left:-20px;" %></div>       
+              <% else %>
+                <div class="large-4 columns"><%= f.label :header_image_label, "New Header Image: ", style: "margin-top: 4px; font-weight: bold" %></div>              
+                <div class="large-5 columns right"><%= f.file_field :header_image, style: "margin: 5px 0px 0px -104px; width: 320px;" %></div>
+                <div class="large-3 columns"><%= f.label :header_image, "Choose File", class: "button radius small expand", style: "margin-left:-20px;" %></div>
+                <div class="large-12 columns" style="margin-bottom: 8px;">
+                  <div class="large-4 columns" style="font-size: 15px;">
+                    <%= f.label :remove_header_image, id: "remove_header_image_label", style: "margin-top: 4px;" do %>
+                      <%= f.check_box :remove_header_image %> Remove Header Image:  
+                    <% end %>
+                  </div>
+                  <div class="large-8 columns" style="font-size: 14px; margin: 4px 0 0 0;">
+                    <% if File.basename(@quiz.header_image.to_s).length < 44 %>
+                      <%= File.basename(@quiz.header_image.to_s) %>
+                    <% else %>
+                      <%= "..."+File.basename(@quiz.header_image.to_s)[-45,44] %>
+                    <% end %>
+                  </div>
+                </div>  
+              <% end %>
+            </div>            
+            <div class="large-12 columns" style="display:none" id="header_url_input">
+              <div class="large-2 columns">
+                <%= f.label :header_url, "Header Url:", class: "inline" %>
+              </div>
+              <div class="large-10 columns">
+                <%= f.text_field :header_url %>
+              </div>
+            </div>
+          </div>
+
+          <div class="row collapse">
+            <div class="large-2 columns">
+              <%= f.label :ad_header, "Ad Header:", class: "inline" %>
+            </div>
+            <div class="large-10 columns">
+              <%= f.text_field :ad_header, placeholder: "This will be a simple text header above the Ad" %>
+            </div>
+          </div>
+
+          <div class="row collapse">
+            <div class="large-2 columns">
+              <%= f.label :ad_url, "Ad Url:", class: "inline" %>
+            </div>
+            <div class="large-10 columns">
+              <%= f.text_field :ad_url %>
+            </div>
+          </div>
+
+          <div class="row collapse">
+            <div class="large-2 columns">
+              <%= f.label :ad_text, "Ad Text:", class: "inline" %>
+            </div>
+            <div class="large-10 columns">
+              <%= f.text_area :ad_text, placeholder: "Place any additional information about the Ad here. It will be displayed in paragraph form under the Ad." %>
+            </div>
+          </div>
+
+          <div class="row collapse">
+            <div class="large-2 columns">
+              <%= f.label :ad_width, "Ad Width:", class: "inline" %>
+            </div>
+            <div class="large-3 columns">
+              <div class="large-10 columns">
+                <% if @quiz.ad_width == nil %>
+                  <%= f.number_field :ad_width, value: 700, max: 900 %>
+                <% else %>
+                  <%= f.number_field :ad_width, value: @quiz.ad_width, max: 900 %>
+                <% end %>
+              </div>
+              <div class="large-2 columns">
+                <span class="postfix radius">px</span>
+              </div>
+            </div>
+            <div class="large-2 large-offset-2 columns">
+              <%= f.label :ad_height, "Ad Height:", class: "inline" %>
+            </div>
+            <div class="large-3 columns">
+              <div class="large-10 columns">
+                <% if @quiz.ad_height == nil %>
+                  <%= f.number_field :ad_height, value: 525 %>
+                <% else %>
+                  <%= f.number_field :ad_height, value: @quiz.ad_height %>
+                <% end %>
+              </div>
+              <div class="large-2 columns">
+                <span class="postfix radius">px</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="row collapse" style="margin-top: 20px;">
+            <%= f.label :ground_rules, "Ground Rules:  (Will be displayed as HTML code)" %>
+            <div class="large-12 columns">
+              <%= f.text_area :ground_rules, style: "height: 80px" %>
+              
+            </div>
+          </div>
+
+          <div class="row collapse">
+            <%= f.label :fb_text, "Message to be used when posting results to Facebook:" %>
+            <div class="large-12 columns">
+              <%= f.text_field :fb_text %>
+              <p style="font-size: 13px;">Example: "My life is worth approximately: $" <span style="color: #0ECF28">(calculated score goes here)</span></p>
+            </div>
           </div>
         </div>
-        <div style="margin: 0 0 10px 0">
-          <%= f.label :ad_url, "Ad Url:", style: "margin-right: 16px;" %> 
-          <%= f.text_field :ad_url, size: 71 %><br>
-          <%= f.label :ad_width %>:
-          <% if @quiz.ad_width == nil %>
-            <%= f.number_field :ad_width, value: 700, max: 900, style: 'padding: 2px;' %>px
-          <% else %>
-            <%= f.number_field :ad_width, value: @quiz.ad_width, max: 900, style: 'padding: 2px;' %>px
-          <% end %>
-          <%= f.label :ad_height, style: "margin-left: 42px;" %>:
-          <% if @quiz.ad_height == nil %>
-            <%= f.number_field :ad_height, value: 525, style: 'padding: 2px;' %>px
-          <% else %>
-            <%= f.number_field :ad_height, value: @quiz.ad_height, style: 'padding: 2px;' %>px
-          <% end %>
-        </div>
-        <%= f.label :ground_rules %>: <br>
-        <%= f.text_area :ground_rules, style: "height: 100px; width: 515px;" %><br>
-        <%= f.label :fb_text, "Message to be used when posting results to Facebook:" %><br>
-        <%= f.text_field :fb_text, size: 81, style: "margin:0; padding: 1px;" %><br>
-        <p> Example: "My life is worth approximately: $" <span style="color: #0ECF28">(calculated score goes here)</span></p>
+        <% if @quiz.image.to_s == "" && @quiz.header_image.to_s == "" && @quiz.header_url == "" %>
+        <% else %>
+          <div class="large-5 columns" style="border: #999 2px solid; min-height: 200px; padding: 20px 0;">
+            <% unless @quiz.image_result == false %>
+              <div class="row">
+                <div class="large-11 large-centered columns" style="text-align:center">
+                  <h6 style="margin-bottom:0">Current Result Image</h6>
+                  <% if @quiz.image.to_s == "" %>
+                    <h5 style="border: 1px dotted #555; margin: 4px 15px; padding: 50px 4px;"> None Uploaded </h5>
+                  <% else%>
+                    <%= image_tag @quiz.image_url() %>
+                  <% end %>                
+                </div>
+              </div>
+            <% end %>
+            <div class="row">
+              <div class="large-11 large-centered columns" style="text-align:center">
+                <h6 style="margin: 25px 0px 0px 0px">Current Header Image</h6>
+                <div id="current_header_url" style="display: none">
+                  <% if @quiz.header_url == "" %>
+                    <h5 style="border: 1px dotted #555; margin: 4px 15px; padding: 50px 4px;"> None Given </h5>
+                  <% else%>
+                    <%= image_tag @quiz.header_url %>
+                  <% end %>
+                </div>
+                <div id="current_header_image" style="display: none">
+                  <% if @quiz.header_image.to_s == "" %>
+                    <h5 style="border: 1px dotted #555; margin: 4px 15px; padding: 50px 4px;"> None Uploaded </h5>
+                  <% else%>
+                    <%= image_tag @quiz.header_image_url() %>
+                  <% end %>
+                </div>              
+              </div>
+            </div>
+          </div>
+        <% end %>
       </div>
     </div>
 
     <%= f.fields_for :questions do |builder| %>
-      <%= render 'question_fields', f: builder %>
-      
+      <%= render 'question_fields', f: builder %>      
     <% end %>
 
-    <%= link_to_add_fields "Add Question", f, :questions %>
-
-    <div class="actions" style="margin: 0 auto; width: 128px">
-      <%= f.submit %>
+    <div class="row" id="add_field_here">
+      <div class="large-2 columns large-centered" style="margin-top: 20px; text-align:center">
+        <%= link_to_add_fields "Add Question", f, :questions, "button radius success" %>
+      </div>
     </div>
+
+    <div class="large-12 columns" style="margin-top: 40px;">
+      <div class="large-2 columns">
+        <%= link_to 'Cancel', quizzes_path, class: "large button radius alert" %>
+      </div>
+      <div class="large-4 columns left large-offset-2">
+        <%= f.submit "Submit", class: "large button expand radius" %>
+      </div>
   <% end %>
 </div>

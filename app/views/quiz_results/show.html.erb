@@ -58,7 +58,13 @@
   
 </div>
 <br><br>
-
-
-<%= link_to 'Back', quiz_results_path %>
-<% if @quiz_taken.image_result == true %> |<%= link_to 'Result Image', results_page_path(@quiz_result) %><% end %>
+<div class"row">
+  <div class="large-3 columns">
+    <div class="large-4 columns">
+      <%= link_to 'Back', quiz_results_path, class: "button radius" %>
+    </div>
+    <div class="large-7 columns">
+      <% if @quiz_taken.image_result == true %><%= link_to 'Result Image', results_page_path(@quiz_result), class: "button radius" %><% end %>
+    </div>
+  </div>
+</div>

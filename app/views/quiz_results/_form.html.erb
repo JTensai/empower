@@ -1,3 +1,19 @@
+<div class="row">
+  <% if @quiz_given.header_image.file != nil %>
+    <div class="large-11 large-centered columns" style="text-align: center">
+      <%= image_tag @quiz_given.header_image_url() %>
+    </div>      
+  <% elsif @quiz_given.header_url != "" %>
+    <div class="large-11 large-centered columns" style="text-aling:center; margin: 0 auto;">
+      <%= image_tag(@quiz_given.header_url) %>
+    </div>
+  <% else %>
+    <div class="large-11 large-centered columns">
+      <h1 style="font-size: 26px;"><%= @quiz_given.name %></h1>
+    </div>
+  <% end %>
+</div>
+
 <div style="width: 850px; margin: 0 auto;">
   <%= form_for @quiz_result do |f| %>
     <% if @quiz_result.errors.any? %>
@@ -11,51 +27,52 @@
       </div>
     <% end %>
 
-    <% if @quiz_given.header_image.file != nil %>
-      <div style="width: 100%; text-align: center">
-        <%= image_tag @quiz_given.header_image_url() %>
-      </div>      
-    <% elsif @quiz_given.header_url != "" %>
-      <div style="width: 100%; text-aling:center; margin: 0 auto;">
-        <%= image_tag(@quiz_given.header_url) %>
-      </div>
-    <% else %>
-      <h1><%= @quiz_given.name %></h1>
-    <% end %>
 
 
-    <% unless @quiz_given.ground_rules == "" %>
-      <h3 style="margin: 15px 0 0 0; font-size: 18px;">Ground Rules</h3>
-      <div style=" width: 600px; margin: 0 auto 20px auto; border: solid #777 2px; min-height: 50px; padding: 8px;">
-        <%= @quiz_given.ground_rules %>
-      </div>
-    <% end %>
-
-    <div style="margin: 10px; padding: 0px 20px; border: dashed 1px #444">
-      <ol class="questions">
-        <% @question_count = 0 %>
-        <% @quiz_given.questions.each do |question| %>
-          <% @question_count = @question_count + 1 %>
-          <li>
-            <%= question.content %>
-            <ol class="answers">            
-              <% question.answers.each do |answer| %>
-                <%= f.label :"#{answer.content}" do %>
-                  <% answer_hash = {answer: answer.content, weight: answer.weight, question_number: @question_count} %> 
-                  <%= f.radio_button :result, answer_hash, style: "margin: 5px; font-weight: normal", class: "answers", name: "question_#{@question_count}" %> 
-                  <%= label_tag :result, answer.content %>
-                  <br>
-                <% end %>
-              <% end %>
-            </ol>
-          </li>
-        <% end %>
-      </ol>
+    <div class="row">
+      <% unless @quiz_given.ground_rules == "" %>
+        <h3 style="margin: 15px 0 0 0; font-size: 18px;">Ground Rules</h3>
+        <div style=" width: 650px; margin: 0 auto 20px auto; border: solid #777 2px; min-height: 80px; padding: 8px 14px; font-size: 14px; line-height: 20px;">
+          <%= render :inline => @quiz_given.ground_rules %>
+        </div>
+      <% end %>
     </div>
-    <%= hidden_field_tag 'question_count', @question_count %> 
-    <%= hidden_field_tag 'quiz_taken', @quiz_given.id %> 
-    <div class="actions" style="text-align:center">
-      <%= f.submit "Submit Quiz", disabled: "disabled", :id => "submit_button" %>
+
+    <div class="row" style="border: dashed 1px #444; padding: 8px 20px;">
+      <div class="large-12 columns">
+        <ol class="questions">
+          <% @question_count = 0 %>
+          <% @quiz_given.questions.each do |question| %>
+            <% @question_count = @question_count + 1 %>
+            <div class="large-12 columns" style="margin-bottom: 20px;">
+              <li>
+                <h5 style="font-size: 13px; margin-bottom: 3px;"><%= question.content %></h5>
+                <ol class="answers">            
+                  <% question.answers.each do |answer| %>
+                    <%= f.label :"#{answer.content}" do %>
+                      <% answer_hash = {answer: answer.content, weight: answer.weight, question_number: @question_count} %> 
+                      <div class="large-1 columns">
+                        <%= f.radio_button :result, answer_hash, style: "margin: 5px; font-weight: normal", class: "answers", name: "question_#{@question_count}" %>
+                      </div>
+                      <div class="large-11 columns" style="font-size: 14px; margin: 3px 0 0 -35px;">
+                        <%= label_tag :result, answer.content %>
+                      </div>
+                      <br>
+                    <% end %>
+                  <% end %>
+                </ol>
+              </li>
+            </div>
+          <% end %>
+        </ol>
+      </div>
+    </div>
+    <div class="row">
+      <%= hidden_field_tag 'question_count', @question_count %> 
+      <%= hidden_field_tag 'quiz_taken', @quiz_given.id %> 
+      <div class="actions" style="text-align:center">
+        <%= f.submit "Submit Quiz", disabled: "disabled", :id => "submit_button" %>
+      </div>
     </div>
   <% end %>
 </div>

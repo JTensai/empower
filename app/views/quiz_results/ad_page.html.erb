@@ -1,9 +1,15 @@
-<div style="margin: 0 auto; width: <%= @quiz_taken.ad_width %>px;">
-  <iframe width="<%= @quiz_taken.ad_width %>" height="<%= @quiz_taken.ad_height %>" style=" border: solid #444 3px;" src=<%= @quiz_taken.ad_url %> frameborder="0" allowfullscreen></iframe>
-
-<% if @quiz_taken.image_result == true %>
-  <%= link_to "Continue to Quiz Results", results_page_path(@quiz_result), style: "float:right; margin: 10px;" %>
-<% else %>
-  <h2> Thank you for taking our quiz! </h2>
-<% end %>
+<div class="row">
+  <div class="large-12 large-centered columns">
+    <h3><%= @quiz_taken.ad_header %></h3>
+    <div style="margin: 0 auto; width: <%= @quiz_taken.ad_width %>px;">
+      <iframe width="<%= @quiz_taken.ad_width %>" height="<%= @quiz_taken.ad_height %>" style=" border: solid #444 3px;" src=<%= @quiz_taken.ad_url %> frameborder="0" allowfullscreen></iframe>
+      <div class=" large-12 large-centered columns" style="margin: 5px 0 35px 0; border: solid 2px #555; border-radius: 10px; padding: 7px 14px;">
+        <p style="font-size: 16px;"><%= @quiz_taken.ad_text %></p>
+      </div>
+    <% if @quiz_taken.image_result == true %>
+      <%= link_to "Continue to Quiz Results", results_page_path(@quiz_result), class: "button radius expand large" %>
+    <% else %>
+      <h2> Thank you for taking our quiz! </h2>
+    <% end %>
+  </div>
 </div>

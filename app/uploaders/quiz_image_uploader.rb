@@ -22,7 +22,7 @@ class QuizImageUploader < CarrierWave::Uploader::Base
   # Override the directory where uploaded files will be stored.
   # This is a sensible default for uploaders that are meant to be mounted:
   def store_dir
-    "#{model.name}/".tr(" ", "_").tr("\?", "")
+    "#{model.name}/".tr(" ", "_").tr("\?\'", "")
     # "#{Rails.root}/public/uploads"
   end
 
@@ -55,7 +55,7 @@ class QuizImageUploader < CarrierWave::Uploader::Base
   # Override the filename of the uploaded files:
   # Avoid using model.id or version_name here, see uploader/store.rb for details.
   def filename
-    "#{model.name+'_result_image'}".tr(" ", "_").tr("\?", "") if original_filename
+    "result_image("+original_filename.tr(" ", "_").tr("\?\'", "")+")" if original_filename
   end
 
 end

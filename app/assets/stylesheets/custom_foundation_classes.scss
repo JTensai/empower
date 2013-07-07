@@ -1,0 +1,10 @@
+@import "foundation/foundation-global", "foundation/components/buttons";
+
+.destroy-button {
+  $padding: emCalc(4px);
+  $bg: #DB0000;
+  $radius: true;
+  @include button($padding, $bg, $radius);
+}
+
+

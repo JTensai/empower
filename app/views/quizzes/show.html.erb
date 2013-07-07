@@ -1,26 +1,58 @@
-<h1><%= @quiz.name %></h1>
-
-<div style="margin: 10px; padding: 0px 20px; border: dashed 1px #444; float:left; min-width: 610px;">
-  <ol class="questions">
-  <% @quiz.questions.each do |question| %>
-    <li>
-      <%= question.content %>
-      <ol class="answers">
-        <% question.answers.each do |answer| %>
-          <li><%= answer.content %></li>
-        <% end %>
-      </ol>
-    </li>
+<div class="row">
+  <% if @quiz.header_image.file != nil %>
+    <div class="large-11 large-centered columns" style="text-align: center">
+      <%= image_tag @quiz.header_image_url() %>
+    </div>      
+  <% elsif @quiz.header_url != "" %>
+    <div class="large-11 large-centered columns" style="text-aling:center; margin: 0 auto;">
+      <%= image_tag(@quiz.header_url) %>
+    </div>
+  <% else %>
+    <div class="large-11 large-centered columns">
+      <h1 style="font-size: 26px;"><%= @quiz.name %></h1>
+    </div>
   <% end %>
-  </ol>
 </div>
 
-<% if @quiz.image_result == true %>
-  <div style="float: right; max-width: 350px; margin: 10px 0px">
-    <%= image_tag @quiz.image_url().to_s %>
+<div class="row" style="margin: 20px 0;">
+  <div class="large-8 columns">
+    <div style="padding: 0px 20px; border: dashed 1px #444;">
+      <ol class="questions">
+      <% @quiz.questions.each do |question| %>
+        <li>
+          <%= question.content %>
+          <ol class="answers">
+            <% question.answers.each do |answer| %>
+              <li><%= answer.content %></li>
+            <% end %>
+          </ol>
+        </li>
+      <% end %>
+      </ol>
+    </div>
   </div>
-<% end %>
-<div style="float:left; width: 800px;">
-  <%= link_to 'Edit', edit_quiz_path(@quiz) %> |
-  <%= link_to 'Back to Quizzes', quizzes_path %>
+
+  <div class="large-4 columns">
+    <div class="row">
+      <div class="large-11 large-centered columns">
+        <% if @quiz.image_result == true %>
+          <div>
+            <%= image_tag @quiz.image_url().to_s %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class"row">
+  <div class="large-3 columns">
+
+    <div class="large-8 columns">
+      <%= link_to 'Back to Quizzes', quizzes_path, class: "button radius" %>
+    </div>
+    <div class="large-4 columns">
+      <%= link_to 'Edit', edit_quiz_path(@quiz), class: "button radius" %>
+    </div>
+  </div>
 </div>

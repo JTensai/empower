@@ -19,12 +19,12 @@
         <% score = score + result[:weight] %>
       <% end %>
     <% end %>
-    <td style="width: 50px;"><% if Quiz.find(quiz_result.quiz_id).scoreable == true %><%= score %><% else %>n/a<% end %></td>
-    <td style="width: 250px;"><%= Quiz.find(quiz_result.quiz_id).name %></td>
-    <td style="width: 150px;"><%= quiz_result.created_at.strftime("%b %e, %Y") %></td>
-    <td><%= link_to 'Show', quiz_result %></td>
+    <td><% if Quiz.find(quiz_result.quiz_id).scoreable == true %><%= score %><% else %>n/a<% end %></td>
+    <td><%= Quiz.find(quiz_result.quiz_id).name %></td>
+    <td style="width: 120px;"><%= quiz_result.created_at.strftime("%b %e, %Y") %></td>
+    <td style="border: none"><%= link_to 'Show', quiz_result, class: "tiny secondary button radius", style: "font-size: 11px;"  %></td>
     <% if can? :destroy, QuizResult %>
-      <td><%= link_to 'Destroy', quiz_result, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      <td style="border: none"><%= link_to 'Destroy', quiz_result, class: "tiny alert button radius", method: :delete, data: { confirm: 'Are you sure?' } %></td>
     <% end %>
   </tr>
 <% end %>

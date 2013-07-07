@@ -1,13 +1,29 @@
-<fieldset style="width: 968px;">
-  <%= f.label :content, "Question" %>:<br>
-  <%= f.text_area :content, style: "height: 50px; width: 500px;" %><br>
-  <%= f.check_box :_destroy %>
-  <%= f.label :_destroy, "Remove Question" %><br>
+<div class="row" style="font-size: 14px;">
+  <fieldset>
+    <div class="row">
+      <div class="large-1 columns">
+        <%= f.label :content, "Question: ", class: "inline right" %>
+      </div>
+      <div class="large-9 columns">
+        <%= f.text_area :content, style: "height: 60px; margin-top: 5px;" %>
+      </div>
+      <div class="large-2 columns">
+        <%= f.label :_destroy, class: "right inline" do %>
+          <%= f.check_box :_destroy %> Remove Question
+        <% end %>
+      </div>
+    </div>
+    <div class="row">
+      <%= f.fields_for :answers do |builder| %>
+        <%= render 'answer_fields', f: builder %>
+      <% end %>
+      <div id="add_field_here">
+        <div class="large-5 large-centered columns" style="padding-top: 10px;">
+          <%= link_to_add_fields "Add Answer", f, :answers, "small button radius secondary" %>
+        </div>
+      </div>
+    </div>
+  </fieldset>
 
-  <%= f.fields_for :answers do |builder| %>
-    <%= render 'answer_fields', f: builder %>
-  <% end %>
-
-  <%= link_to_add_fields "Add Answer", f, :answers %>
- 
-</fieldset>
+    
+</div>

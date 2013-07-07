@@ -1,16 +1,79 @@
 <!DOCTYPE html>
-<html>
-<head>
-  <title>Empower</title>
-  <%= stylesheet_link_tag    "application", :media => "all" %>
-  <%= javascript_include_tag "application" %>
-  <%= csrf_meta_tags %>
-</head>
-<body style="background-color: #165CAB">
-  <div id="holdcenter">
-    <div id="content" style=" ">
-      <%= yield %>
+<!-- paulirish.com/2008/conditional-stylesheets-vs-css-hacks-answer-neither/ -->
+<!--[if lt IE 7 ]> <html class="ie6" lang="en"> <![endif]-->
+<!--[if IE 7 ]>    <html class="ie7" lang="en"> <![endif]-->
+<!--[if IE 8 ]>    <html class="ie8" lang="en"> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!--> <html lang="en"> <!--<![endif]-->
+  <head>
+  	<meta charset="utf-8" />
+
+  	<!-- Uncomment to make IE8 render like IE7 -->
+  	<!-- <meta http-equiv="X-UA-Compatible" content="IE=7" /> -->
+
+  	<!-- Set the viewport width to device width for mobile -->
+  	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  	<title><%= content_for?(:title) ? yield(:title) : "Untitled" %></title>
+
+  	<%= stylesheet_link_tag    "application" %>
+  	<%= javascript_include_tag "vendor/custom.modernizr" %>
+    <%= csrf_meta_tags %>
+  </head>
+
+  <body style="background-image: url(/assets/structure/textile-dark.png)">
+    <div class="fixed contain-to-grid">
+      <div class="fixed contain-to-grid" style="background-image: url(/assets/structure/drop_shadow.png); background-repeat: repeat-x; height: 20px; background-size: 10px; margin-top: 38px; background-color: transparent;"></div>
+      <nav class="top-bar">
+        <ul class="title-area">
+          <li class="name">
+            <h1><%= link_to "Empowered Quizzes", quizzes_path %></a></h1>
+          </li>
+        </ul>
+        <section class="top-bar-section">
+          <ul class="right">
+            <li class="divider"></li>
+            <li><%= link_to "Quizzes", quizzes_path %></li>
+            <li class="divider"></li>
+            <li><%= link_to "Quiz Results", quiz_results_path %></li>
+            <!-- <li class="divider"></li> -->
+            <!-- <li><%#= link_to "About Us" %></li> -->
+            <!-- <li class="divider"></li> -->
+            <!-- <li><%#= link_to "Submit a Quiz Idea" %></li> -->
+            <li class="divider"></li>
+            <% if current_user %>
+              <li class="has-form" style="color: white; padding-top: 7px; font-size: 14px;"><%= current_user.email %></li>
+              <li class="has-form"><%= link_to "Log Out", logout_path, class: "button secondary radius", style: "line-height: 24px; margin-top:-2px; font-size: 13px;" %></li>
+            <% else %>
+              <li><%= link_to "Log In", login_path %></li>
+              <li class="divider"></li>
+            <% end %>
+          </ul>
+        </div>
+      </nav>      
     </div>
-  </div>
-</body>
+    <div class="row" style="height: 16px;"></div>
+
+    <div class="row">
+      <div data-alert id="error_alert" class="large-12 large-centered columns alert-box alert radius" style="padding: 8px; margin: 3px auto; text-align:center; display:none">
+        <%= yield :error %>        
+        <a href="#" class="close">&times;</a>
+      </div>
+      <div data-alert id="succes_alert" class="large-12 large-centered columns alert-box success radius" style="padding: 8px; margin: 3px auto; text-align:center; display:none">
+        <%= yield :succes %>
+        <a href="#" class="close">&times;</a>
+      </div>
+      <div data-alert id="notice_alert" class="large-12 large-centered columns alert-box radius" style="padding: 8px; margin: 3px auto; text-align:center; display:none">
+        <%= yield :notice %>
+        <a href="#" class="close">&times;</a>
+      </div>
+    </div>
+
+    <div id="content" style="margin-top: 11px;">
+      <div class="row">
+        <div class="large-12 columns"><%= yield %></div>
+      </div>
+    </div>
+    <%= javascript_include_tag "application" %>
+
+  </body>
 </html>

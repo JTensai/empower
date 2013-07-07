@@ -1,6 +1,7 @@
 class QuizResultsController < ApplicationController
 
   load_and_authorize_resource :except => :results_page
+  before_filter :authorize, only: [:index, :show, :destroy]
 
   def index
     @quiz_results = QuizResult.all

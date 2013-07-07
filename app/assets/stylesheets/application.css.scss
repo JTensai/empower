@@ -10,7 +10,10 @@
  *
  *= require_self
  *= require_tree .
+ *= require foundation_and_overrides
  */
+
+
 
 h1 {
   text-align: center;
@@ -65,10 +68,11 @@ div .actions input{
 
 #content {
   border: solid #222 3px; 
-  background-color: white; 
-  padding: 15px 20px; 
-  float:left;
-  width: 1000px;
+  background-color: #fcfcfc; 
+  padding: 15px 20px;
+  width: 1050px;
   min-height: 400px;
-  margin-bottom: 40px;
-}
+  float: none;
+  margin: 12px auto;
+  margin-bottom: 300px;
+} 

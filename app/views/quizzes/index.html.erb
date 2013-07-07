@@ -1,34 +1,36 @@
 <h1>Quizzes</h1>
-<% if can? :manage, Quiz %>
-  <h3><%= link_to 'Create a New Quiz', new_quiz_path %></h3>
-<% end %>
 <h3> Please click on a quiz to take it</h3><br>
 
+<% if can? :manage, Quiz %>
+  <h4 style="text-align:center"><%= link_to 'Create a New Quiz', new_quiz_path, class: "small button radius", style: "color: #f1f1f1;" %></h4>
+<% end %>
 
 <% if can? :manage, Quiz %>
-  <table style="margin: 0 auto">
+  <table style="margin: 0 auto; padding: 5px;">
     <tr>
       <th>Live?</th>
       <th>Name</th>
       <th>Number of Questions</th>
       <th>Scored?</th>
       <th>Date Created</th>
-      <th></th>
-      <th></th>
+      <th>Actions</th>
     </tr>
 
     <% @quizzes.each do |quiz| %>
     <tr>
       <td><% if quiz.live == true %>Yes<% else %>No<% end %></td>
-      <td style="font-size: 18px; width: 250px; padding: 5px 0px; spacing: 5px 0px"><%= link_to quiz.name, start_quiz_path(quiz), style: "text-decoration:none; color: #333" %></td>
-      <td style="width: 150px"><%= pluralize(quiz.questions.size, "Question") %></td>
+      <td style="font-size: 18px; padding: 10px 10px; spacing: 5px 0px"><%= link_to quiz.name, start_quiz_path(quiz), style: "text-decoration:none; color: #333" %></td>
+      <td><%= pluralize(quiz.questions.size, "Question") %></td>
       <td><% if quiz.scoreable == true %>Yes<% else %>No<% end %></td>
-      <td style="width: 100px;"><%= quiz.created_at.strftime("%b %e, %Y") %></td>
-      <td style="border:none; padding: 0px 0px 0px 5px;"><%= link_to 'Show', quiz %></td>
-      <td style="border:none;"><%= link_to 'Edit', edit_quiz_path(quiz) %></td>
+      <td><%= quiz.created_at.strftime("%b %e, %Y") %></td>
+      <td style="border:none; width: 115px;"><%= link_to 'Show', quiz, class: "tiny secondary button radius", style: "font-size: 11px;" %>
+      <%= link_to 'Edit', edit_quiz_path(quiz), class: "tiny secondary button radius", style: "font-size: 11px;" %></td>
       <% if can? :destroy, quiz %>
-        <td style="border:none; padding: 0;"><%= link_to 'Destroy', quiz, method: :delete, data: { confirm: 'Are you sure? If you delete this quiz, you will also delete all results for this quiz.' } %></td>
+        <td style="border:none;"><%= link_to 'Destroy', quiz, class: "tiny alert button radius", style: "font-size: 11px;", method: :delete, data: { confirm: 'Are you sure? If you delete this quiz, you will also delete all results for this quiz.' } %></td>
+      <% else %>
+        </td>
       <% end %>
+
     </tr>
     <% end %>
 

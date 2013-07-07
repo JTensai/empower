@@ -1,6 +1,7 @@
 class QuizzesController < ApplicationController
 
   load_and_authorize_resource
+  before_filter :authorize, except: [:index]
 
   def index
     @quizzes = Quiz.all

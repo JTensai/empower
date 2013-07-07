@@ -1,23 +1,25 @@
-<fieldset>
-  <%= f.label :content, "Answer" %>:
-  <%= f.text_field :content, style: "margin: 4px 0px;", size: 70 %>
-  <%= f.hidden_field :_destroy %>
-  <%= link_to "remove", '#', class: "remove_fields" %><br>
-  
-  <div class="weight_select" style="display:none">
-    <%= f.label :weight %>:
-    <% (0..5).each do |i| %>
-      <%= f.label :"weight_#{i}" do %>
-        <% if i == 0 %>
-          <%= f.radio_button :weight, i, style: "margin-left: 20px;", class: "weight_radio_button", checked:"checked" %> <%= i %>
-        <% elsif i == 5 %>
-          <%= f.radio_button :weight, i, style: "margin-left: 20px;", class: "weight_radio_button" %>
-          <%= f.number_field :weight, size: 2, placeholder: " Custom Value" %>
-        <% else %>
-          <%= f.radio_button :weight, i, style: "margin-left: 20px", class: "weight_radio_button" %> <%= i %>
-        <% end %>
-      <% end %>
-    <% end %>
+<div class="row">
+  <div class="large-10 columns">
+    <fieldset style="padding: 10px 0 0 0; margin: 3px 10px;">
+        <div class="large-1 columns">
+          <%= f.label :content, "Answer: ", class: "inline right" %>
+        </div>
+        <div class="large-8 columns left">
+          <%= f.text_field :content %>
+        </div>
+        <div class="large-3 columns weight_select">
+          <div class="large-3 columns">
+            <%= f.label :weight, "Weight: ", class: "inline" %>
+          </div>
+          <div class="large-9 columns">
+            <%= f.number_field :weight, placeholder: "custom" %>
+          </div>
+        </div>
+    </fieldset>
+
+  </div>  
+  <div class="large-1 columns left" style="margin-top: 17px;">
+    <%= f.hidden_field :_destroy %>
+    <%= link_to "Remove", '#', class: "remove_fields destroy-button", style: "font-size: 11px;" %>
   </div>
-  
-</fieldset>
+</div>

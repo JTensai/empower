@@ -5,10 +5,11 @@
 <% picture = 'http://commondatastorage.googleapis.com/quiz-result-images/fb%20icon%20for%20empowered.jpg' %>
 <!-- Different image for each quiz -->
 <%# picture = @quiz_taken.image_url().to_s %>
-<% name = @quiz_taken.name %>
-<% caption = "Click the link above to take this quiz and get your own results" %>
-<% description = @quiz_taken.fb_text + @score.to_s %>
-<% redirect_uri = "https://empowered-quizzes.herokuapp.com"+results_page_path(@quiz_result).to_s %>
+<% name = @quiz_taken.name.gsub("'", "%27") %>
+<% caption = "Click the link above to get your own score!" %>
+<% description = @quiz_taken.fb_text.gsub("'", "%27") + " " + @score.to_s %>
+<%# redirect_uri = results_page_url(@quiz_result)+"/#close_window" %>
+<% redirect_uri = "https://empowered-quizzes.herokuapp.com"+start_quiz_path(@quiz_taken).to_s %>
 
 <script>
   function fbs_click() {
@@ -16,37 +17,51 @@
     t=document.title;window.open('https://www.facebook.com/dialog/feed?app_id=<%= app_id %>&display=<%= display %>&link=<%= link %>&picture=<%= picture %>&name=<%= name %>&caption= <%= caption %>&description= <%= description %>&redirect_uri= <%= redirect_uri %>','Facebook Feed Post','width=600, height=320, left=150, top=150');
     return false;
   }
+  //if (window.location.hash == '#close_window') 
+    //window.top.close()
+    //alert(window.location.hash)
+    
 </script>
 <style> 
-  html .fb_share_link { 
-    padding:2px 0 0 35px;
-    height:35px; 
+  .fb_share_link { 
+    padding: 4px 0 4px 35px;
+    height: 35px; 
     background:url(http://commondatastorage.googleapis.com/quiz-result-images/facebook%20share%20icon.jpg) no-repeat top left;
-    background-size:30px 30px;
+    background-size: 30px 30px;
   }
 
   #image_background{
     display: block;
     background: url('<%= @quiz_taken.image_url().to_s %>') no-repeat; 
-    width: 300px; height: 70px;
+    width: 300px; 
     font-size: 35px;
     color: #fff; 
     text-decoration: none;
     text-align: center;
     padding-top: 160px;
-    margin:10px auto;
+    padding-bottom: 35px;
+    margin: 10px auto;
+
   }
 </style>
 
-<div style="text-align:center; width: 350px; margin: 0 auto; padding: 10px;">
-  <a id="image_background">
+<div class="row">
+  <div class="large-11 large-centered columns" id="image_background">
     <%= @score %>
-  </a>
-<br>
-  <div style="float:right; margin-right: 72px; font-size: 20px;">
-    <a href="#" onclick="fbs_click()" target="_new" class="fb_share_link">Share on Facebook</a>
   </div>
-  <div>
-    <br><br><br><br><br><%= link_to "Return to Full List of Quizzes", quizzes_path %>
+</div>
+
+<div class="row">
+  <div class="large-4 large-centered columns" style="text-align:center; font-size: 20px;">
+    <div style="  padding: 20px;" style="border: solid 1px blue; padding: 10px;">
+      <a href="#" onclick="fbs_click()" target="_new" class="fb_share_link">Share on Facebook</a>
+    </div>
+    
+  </div>
+</div>
+
+<div class="row">
+  <div class="large-3 large-centered columns" style="text-align:center">
+    <%= link_to "Return to Full List of Quizzes", quizzes_path %>
   </div>
 </div>
