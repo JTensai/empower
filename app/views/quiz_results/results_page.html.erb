@@ -1,3 +1,7 @@
+<% content_for :title do %>
+  Empowered Quizzes: <%= @quiz_taken.name %> (<%= @quiz_result.score %>)
+<% end %>
+
 <% app_id = "1111125565694052" %>
 <% display = "popup" %>
 <% link = "https://empowered-quizzes.herokuapp.com"+start_quiz_path(@quiz_taken).to_s %>
